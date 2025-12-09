@@ -1,8 +1,8 @@
-int forward = 1;
-int reverse = 0;
-int left = 0;
-int right = 1;
-int etu_m = 0
+int forward = HIGH;
+int reverse = LOW;
+int left = HIGH;
+int right = LOW;
+int etu_m = 0;
 int taka_m = 1;
 
 int dirA = 12;
@@ -13,23 +13,27 @@ int pwmB = 11;
 void setup(){
   setupArdu();
 }
-void loop{
-  delay(5000);
+void loop(){
   drive(taka_m, forward, 150);
   delay(2000);
-  stop(taka_m);
-  delay(10);
+  stopMotor(taka_m);
+  delay(200);
+
   drive(taka_m, reverse, 150);
   delay(2000);
-  stop(taka_m);
-  delay(10);
+  stopMotor(taka_m);
+  delay(200);
+
 
   drive(etu_m, left, 200);
   delay(2000);
+
   drive(etu_m, right, 200);
   delay(2000);
-  stop(etu_m);
-  delay(10);
+
+  stopMotor(etu_m);
+  delay(2000);
+
 }
 
 void drive(byte motor, byte dir, byte spd){
@@ -43,7 +47,7 @@ void drive(byte motor, byte dir, byte spd){
   }
 }
 void stop(byte motor){
-  drive(motor, 0, 0);
+  drive(motor, LOW, 0);
 }
 void setupArdu(){
   pinMode(pwmA, OUTPUT);
@@ -51,9 +55,9 @@ void setupArdu(){
   pinMode(dirA, OUTPUT);
   pinMode(dirB, OUTPUT);
 
-  digitalWrite(pwmA, LOW);
-  digitalWrite(pwmB, LOW);
   digitalWrite(dirA, LOW);
   digitalWrite(dirB, LOW);
+  analogWrite(pwmA, 0);
+  analogWrite(pwmB, 0);
 }
 
